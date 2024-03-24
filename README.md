@@ -1,5 +1,6 @@
 # github html preview page
-for [Github Html Preview Extension](https://github.com/dohyeon5626/github-html-preview-extension)
+for [Github Html Preview Extension](https://github.com/dohyeon5626/github-html-preview-extension)   
+use `https://dohyeon5626.github.io/github-html-preview-page/?{GITHUB_URL}&{TOKEN}`
 > This extension provides a preview of the html file uploaded to github. You can view rough results without having to copy locally.
 > ## Download
 > ```
