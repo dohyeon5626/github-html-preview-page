@@ -1,4 +1,4 @@
-let showErrorPage = (token) => {
+let showErrorPage = () => {
     document.body.innerHTML = `
     <link rel="stylesheet" href="index.css">
     <div id="error">
@@ -15,6 +15,9 @@ let showErrorPage = (token) => {
         </div>
     </div>
     `;
+
+    let token = location.href.split("&")[1];
+    if (token) document.getElementById("token-input").value = token;
 
     document.getElementById("token-button").onclick = () => {
         let token = document.getElementById("token-input").value;
@@ -66,6 +69,6 @@ let getContent = (rawUrl) => {
                 return res.text()
             })
             .then(text => resolve(text))
-            .catch(() => showErrorPage(null))
+            .catch(() => showErrorPage())
     });
 }
