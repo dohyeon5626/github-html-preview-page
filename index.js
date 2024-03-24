@@ -1,6 +1,6 @@
-let params = new URLSearchParams(location.search);
-let url = params.get("url");
-let token = params.get("token");
+let data = location.search.split("&");
+let url = data[0].replace("?", "");
+let token = data[1];
 
 if (token) showPageWithToken(url, token);
 else showPage(url);
