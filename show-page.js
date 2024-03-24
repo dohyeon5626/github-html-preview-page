@@ -15,6 +15,12 @@ let showErrorPage = (token) => {
         </div>
     </div>
     `;
+
+    document.getElementById("token-button").onclick = () => {
+        let token = document.getElementById("token-input").value;
+        if (token == "") location.href = location.href.split("&")[0]
+        else location.href = location.href.split("&")[0] + "&" + token
+    };
 }
 
 
