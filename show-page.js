@@ -1,5 +1,6 @@
 let showErrorPage = (token) => {
     document.body.innerHTML = `
+    <link rel="stylesheet" href="index.css">
     <div id="error">
         <h1 id="error-title">404 Not Found</h1>
         <p id="error-text">This might be when permissions are required. Try setting up a token!<br/>Even if you enter a valid token, it may fail because the request count limit has been exceeded.</p>
@@ -53,7 +54,11 @@ let showPage = async (githubUrl) => {
 
 let getContent = (rawUrl) => {
     return new Promise((resolve) => {
-        fetch(rawUrl).then(res => res.text())
+        fetch(rawUrl)
+            .then(res => {
+                if (!res.ok) throw new Error('400 or 500 에러 발생')
+                return res.text()
+            })
             .then(text => resolve(text))
             .catch(() => showErrorPage(null))
     });
