@@ -1,5 +1,5 @@
 let showPageWithToken = async (githubUrl, token) => {
-    let rawUrl = githubUrl.replace("https://github.com", "http://gfqbuhjryx.us14.qoddiapp.com/github-content/" + token).replace("/blob", "");
+    let rawUrl = githubUrl.replace("github.com", "gfqbuhjryx.us14.qoddiapp.com/github-content/" + token).replace("/blob", "");
 
     // HTML
     document.open();
