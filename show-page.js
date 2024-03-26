@@ -38,21 +38,24 @@ let showPage = async (githubUrl) => {
     document.close();
     
     // CSS
-    document.querySelectorAll("link[rel=stylesheet]").forEach(async (element) => {
+    while(document.querySelector("link[rel=stylesheet]")) {
+        let element = document.querySelector("link[rel=stylesheet]");
         element.outerHTML = "<style>" + await getContent(element.getAttribute("href")) + "</style>";
-    });
+    }
 
     // JS
-    let promiseArray = [];
-    document.querySelectorAll("script[src]").forEach(async (element) => {
-        promiseArray.push(getContent(element.getAttribute("src")));
-    });
+    while(document.querySelector("script[src]")) {
+        let element = document.querySelector("script[src]");
 
-    await Promise.all(promiseArray).then(async (contents) => {
-        contents.forEach(code => eval(code));
-    });
-    if (window.onload) window.onload();
-    document.dispatchEvent(new Event('DOMContentLoaded', {bubbles: true, cancelable: true}));
+        let script = document.createElement('script');
+		script.innerHTML = await getContent(element.getAttribute("src"));
+		document.body.appendChild(script);
+
+        element.remove();
+    }
+
+    // DOMContentLoaded Event
+    document.dispatchEvent(new Event("DOMContentLoaded"));
 
     // TODO
     // Frame
