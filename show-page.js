@@ -52,10 +52,8 @@ let showPage = async (githubUrl) => {
 		document.body.appendChild(script);
 
         element.remove();
+        window.dispatchEvent(new Event('load'));
     }
-
-    // DOMContentLoaded Event
-    document.dispatchEvent(new Event("DOMContentLoaded"));
 
     // TODO
     // Frame
