@@ -6,10 +6,10 @@
 body {
     background-color: #ffffff;
 }
-#error-title {
+#error-title, #base-title {
     font-size: 30px;
 }
-#error-text {
+#error-text, #base-text {
     font-size: 15px;
     color: #000000;
     margin: 20px;
@@ -18,7 +18,7 @@ body {
 #loading-text, #error-title {
     color: #000000;
 }
-#loading, #error {
+#loading, #error, #base {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,6 +30,9 @@ body {
     height: 100vh;
     background-color: #ffffff;
     animation-delay: 0.2s;
+}
+#base {
+    opacity: 0;
 }
 @keyframes hideLoadingScreen {
     from {
@@ -65,13 +68,16 @@ body {
     height: 2rem;
     top: -1rem;
 }
-#token-box {
+#token-box, #url-box {
     display: flex;
     justify-content: space-around;
     align-items: center;
     width: 280px;
 }
-#token-input-box {
+#url-box {
+    width: 700px;
+}
+#token-input-box, #url-input-box {
     width: 180px;
     height: 24px;
     background-color: #F6F8FA;
@@ -82,7 +88,10 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-#token-input {
+#url-input-box {
+    width: 600px;
+}
+#token-input, #url-input {
     border: 0px;
     vertical-align: middle;
     line-height: 20px;
@@ -91,7 +100,10 @@ body {
     outline: none;
     background-color: #F6F8FA;
 }
-#token-button {
+#url-input {
+    width: 600px;
+}
+#token-button, #url-button {
     height: 34px;
     color: #FFFFFF;
     background-color: #2DA44E;

@@ -1,10 +1,12 @@
 # github html preview page
-for [Github Html Preview Extension](https://github.com/dohyeon5626/github-html-preview-extension)   
-use `https://dohyeon5626.github.io/github-html-preview-page/?{GITHUB_URL}&{TOKEN}`
-> This extension provides a preview of the html file uploaded to github. You can view rough results without having to copy locally.
-> ## Download
-> ```
-> https://chrome.google.com/webstore/detail/github-html-preview/pmpjligbgooljdpakhophgddmcipglna?hl=ko&authuser=0
-> ```
-> ## Guide
-> [![GUIDE](http://img.youtube.com/vi/1ILDesSpFls/0.jpg)](https://www.youtube.com/watch?v=1ILDesSpFls)
+## Use in web
+[Github Html Preview Page](https://dohyeon5626.github.io/github-html-preview-page/) or Move **https://dohyeon5626.github.io/github-html-preview-page/?{HTML_GITHUB_URL}** 
+
+## Use it more conveniently
+If you want to use it easily as Chrome Extension, download it
+### Download
+[Github Html Preview Extension Download](https://github.com/dohyeon5626/github-html-preview-extension)   
+### Guide
+[![GUIDE](http://img.youtube.com/vi/1ILDesSpFls/0.jpg)](https://www.youtube.com/watch?v=1ILDesSpFls)
+### Code
+[Github Html Preview Extension Code](https://github.com/dohyeon5626/github-html-preview-extension)   
