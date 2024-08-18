@@ -38,21 +38,26 @@ let showPage = async (githubUrl) => {
     document.close();
     
     // CSS
-    while(document.querySelector("link[rel=stylesheet]")) {
+    while(document.querySelector("link[rel=stylesheet]:not([status=clear])")) {
         let element = document.querySelector("link[rel=stylesheet]");
-        element.outerHTML = "<style>" + await getContent(element.getAttribute("href")) + "</style>";
+        let href = element.getAttribute("href")
+        if (!isPublicUrl(href)) element.outerHTML = '<style status="clear">' + await getContent(href) + "</style>";
+        else element.setAttribute("status", "clear");
     }
 
     // JS
-    while(document.querySelector("script[src]")) {
+    while(document.querySelector("script[src]:not([status=clear])")) {
         let element = document.querySelector("script[src]");
 
         let script = document.createElement('script');
-		script.innerHTML = await getContent(element.getAttribute("src"));
-		document.body.appendChild(script);
-
-        element.remove();
-        window.dispatchEvent(new Event('load'));
+        let src = element.getAttribute("src")
+        if (!isPublicUrl(src)) {
+            script.innerHTML = await getContent(src);
+            document.body.appendChild(script);
+            script.setAttribute("status", "clear");
+            element.remove();
+            window.dispatchEvent(new Event('load'));
+        } else element.setAttribute("status", "clear");
     }
 
     // TODO

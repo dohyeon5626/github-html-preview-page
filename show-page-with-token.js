@@ -9,9 +9,11 @@ let showPageWithToken = async (githubUrl, token) => {
     document.close();
     
     // CSS
-    while(document.querySelector("link[rel=stylesheet]")) {
+    while(document.querySelector("link[rel=stylesheet]:not([status=clear])")) {
         let element = document.querySelector("link[rel=stylesheet]");
-        element.outerHTML = "<style>" + await getContentWithToken(element.getAttribute("href"), githubUrl) + "</style>";
+        let href = element.getAttribute("href")
+        if (!isPublicUrl(href)) element.outerHTML = '<style status="clear">' + await getContentWithToken(href, githubUrl) + "</style>";
+        else element.setAttribute("status", "clear");
     }
 
     // JS
@@ -19,11 +21,14 @@ let showPageWithToken = async (githubUrl, token) => {
         let element = document.querySelector("script[src]");
 
         let script = document.createElement('script');
-		script.innerHTML = await getContentWithToken(element.getAttribute("src"), githubUrl);
-		document.body.appendChild(script);
-
-        element.remove();
-        window.dispatchEvent(new Event('load'));
+        let src = element.getAttribute("src")
+        if (!isPublicUrl(src)) {
+            script.innerHTML = await getContentWithToken(src, githubUrl);
+            document.body.appendChild(script);
+            script.setAttribute("status", "clear");
+            element.remove();
+            window.dispatchEvent(new Event('load'));
+        } else element.setAttribute("status", "clear");
     }
 
     // TODO
