@@ -35,11 +35,10 @@ let showPage = async (githubUrl) => {
     document.write(
         (await getContent(rawUrl)).replace(/<head([^>]*)>/i, `<head$1><base href="${rawUrl}">`)
     );
-    document.close();
     
     // CSS
     while(document.querySelector("link[rel=stylesheet]:not([status=clear])")) {
-        let element = document.querySelector("link[rel=stylesheet]");
+        let element = document.querySelector("link[rel=stylesheet]:not([status=clear])");
         let href = element.getAttribute("href")
         if (!isPublicUrl(href)) element.outerHTML = '<style status="clear">' + await getContent(href) + "</style>";
         else element.setAttribute("status", "clear");
@@ -47,22 +46,35 @@ let showPage = async (githubUrl) => {
 
     // JS
     while(document.querySelector("script[src]:not([status=clear])")) {
-        let element = document.querySelector("script[src]");
+        let element = document.querySelector("script[src]:not([status=clear])");
 
         let script = document.createElement('script');
         let src = element.getAttribute("src")
         if (!isPublicUrl(src)) {
-            script.innerHTML = await getContent(src);
+            script.innerHTML = "(function () {" + await getContent(src) + "})();";
             document.body.appendChild(script);
             script.setAttribute("status", "clear");
             element.remove();
-            window.dispatchEvent(new Event('load'));
         } else element.setAttribute("status", "clear");
+    }
+    window.dispatchEvent(new Event('load'));
+
+    // <a> link
+    while(document.querySelector("a[href]:not([status=clear])")) {
+        let element = document.querySelector("a[href]:not([status=clear])");
+        let href = element.href;
+        element.setAttribute(
+            "href",
+            href.replace(
+                "https://raw.githubusercontent.com/",
+                location.origin + location.pathname + "?https://github.com/"
+            )
+        );
+        element.setAttribute("status", "clear");
     }
 
     // TODO
     // Frame
-    // <a> link
     // @import
     // loadScript()
 }

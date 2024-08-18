@@ -3,6 +3,10 @@ if (location.search != '') {
     let url = data[0].replace("?", "");
     let token = data[1];
 
+    while(document.body == null) {
+        console.log("document body load fail");
+    }
+
     if (token) showPageWithToken(url, token);
     else showPage(url);
 } else {

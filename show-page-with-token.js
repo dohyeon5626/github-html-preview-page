@@ -6,34 +6,47 @@ let showPageWithToken = async (githubUrl, token) => {
     document.write(
         (await getContentWithToken(rawUrl, githubUrl)).replace(/<head([^>]*)>/i, `<head$1><base href="${rawUrl}">`)
     );
-    document.close();
-    
+
     // CSS
     while(document.querySelector("link[rel=stylesheet]:not([status=clear])")) {
-        let element = document.querySelector("link[rel=stylesheet]");
+        let element = document.querySelector("link[rel=stylesheet]:not([status=clear])");
         let href = element.getAttribute("href")
         if (!isPublicUrl(href)) element.outerHTML = '<style status="clear">' + await getContentWithToken(href, githubUrl) + "</style>";
         else element.setAttribute("status", "clear");
     }
 
     // JS
-    while(document.querySelector("script[src]")) {
-        let element = document.querySelector("script[src]");
+    while(document.querySelector("script[src]:not([status=clear])")) {
+        let element = document.querySelector("script[src]:not([status=clear])");
 
         let script = document.createElement('script');
         let src = element.getAttribute("src")
         if (!isPublicUrl(src)) {
-            script.innerHTML = await getContentWithToken(src, githubUrl);
+            script.innerHTML = "(function () {" + await getContentWithToken(src, githubUrl) + "})();";
+            console.log(document.body);
             document.body.appendChild(script);
             script.setAttribute("status", "clear");
             element.remove();
-            window.dispatchEvent(new Event('load'));
         } else element.setAttribute("status", "clear");
+    }
+    window.dispatchEvent(new Event('load'));
+
+    // <a> link
+    while(document.querySelector("a[href]:not([status=clear])")) {
+        let element = document.querySelector("a[href]:not([status=clear])");
+        let href = element.href;
+        element.setAttribute(
+            "href",
+            href.replace(
+                "https://gfqbuhjryx.us14.qoddiapp.com/github-content/" + token,
+                location.origin + location.pathname + "?https://github.com/"
+            ) + "&" + token
+        );
+        element.setAttribute("status", "clear");
     }
 
     // TODO
     // Frame
-    // <a> link
     // @import
     // loadScript()
 }
