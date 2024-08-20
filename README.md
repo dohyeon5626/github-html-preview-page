@@ -7,4 +7,4 @@ This website allows you to instantly preview HTML files on GitHub. Simply paste 
 **Use** : [Github Html Preview Page](https://dohyeon5626.github.io/github-html-preview-page/)   
 **Link** : https://dohyeon5626.github.io/github-html-preview-page/?{HTML_GITHUB_URL}&{GITHUB_TOKEN}
 
-> for https://github.com/dohyeon5626/github-html-preview-page
+> for https://github.com/dohyeon5626/github-html-preview-extension
