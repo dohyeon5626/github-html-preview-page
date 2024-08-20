@@ -1,9 +1,10 @@
 # github html preview page
-## Use in web
-Click [Github Html Preview Page](https://dohyeon5626.github.io/github-html-preview-page/) or   
-Move **https://dohyeon5626.github.io/github-html-preview-page/?{HTML_GITHUB_URL}** 
+![GitHub License](https://img.shields.io/github/license/dohyeon5626/github-html-preview-page?style=flat&color=green) ![Website](https://img.shields.io/website?url=https%3A%2F%2Fdohyeon5626.github.io%2Fgithub-html-preview-page%2F&up_message=running&up_color=green&down_message=not%20running&down_color=red&style=flat&label=preview%20page) ![GitHub deployments](https://img.shields.io/github/deployments/dohyeon5626/github-html-preview-page/github-pages?style=flat&label=deploy&color=green) ![Website](https://img.shields.io/website?url=https%3A%2F%2Fgfqbuhjryx.us14.qoddiapp.com%2Fhealth&up_message=running&up_color=green&down_message=not%20running&down_color=red&style=flat&label=proxy%20server)
 
-## Use it more conveniently
-If you want to use it easily as [Chrome Extension](https://chromewebstore.google.com/detail/github-html-preview/pmpjligbgooljdpakhophgddmcipglna?hl=ko&authuser=0), download it
-### Guide
-[![GUIDE](http://img.youtube.com/vi/1ILDesSpFls/0.jpg)](https://www.youtube.com/watch?v=1ILDesSpFls)
+
+This website allows you to instantly preview HTML files on GitHub. Simply paste the URL of any HTML file, and you'll see the rendered content in your browser. It also supports private repositories when you provide your GitHub token.
+
+**Use** : [Github Html Preview Page](https://dohyeon5626.github.io/github-html-preview-page/)   
+**Link** : https://dohyeon5626.github.io/github-html-preview-page/?{HTML_GITHUB_URL}&{GITHUB_TOKEN}
+
+> for https://github.com/dohyeon5626/github-html-preview-page
