@@ -1,5 +1,6 @@
 let showErrorPage = () => {
-    document.body.innerHTML = `
+    document.open();
+    document.write(`
     <link rel="stylesheet" href="index.css">
     <div id="error">
         <h1 id="error-title">404 Not Found</h1>
@@ -14,7 +15,8 @@ let showErrorPage = () => {
             <button id="token-button">Enter</button>
         </div>
     </div>
-    `;
+    `);
+    document.close();
 
     let token = location.href.split("&")[1];
     if (token) document.getElementById("token-input").value = token;
@@ -32,9 +34,13 @@ let showPage = async (githubUrl) => {
 
     // HTML
     document.open();
-    document.write(
-        (await getContent(rawUrl)).replace(/<head([^>]*)>/i, `<head$1><base href="${rawUrl}">`)
-    );
+    document.write(await getDocumentContent(rawUrl));
+    if(!document.head.querySelector('base')) {
+        let base = document.createElement('base');
+        base.href = rawUrl;
+        document.head.appendChild(base);
+    }
+    document.close();
     
     // CSS
     while(document.querySelector("link[rel=stylesheet]:not([status=clear])")) {
@@ -79,7 +85,7 @@ let showPage = async (githubUrl) => {
     // loadScript()
 }
 
-let getContent = (rawUrl) => {
+let getDocumentContent = (rawUrl) => {
     return new Promise((resolve) => {
         fetch(rawUrl)
             .then(res => {
@@ -88,5 +94,17 @@ let getContent = (rawUrl) => {
             })
             .then(text => resolve(text))
             .catch(() => showErrorPage())
+    });
+}
+
+let getContent = (rawUrl) => {
+    return new Promise((resolve) => {
+        fetch(rawUrl)
+            .then(res => {
+                if (!res.ok) throw new Error('400 or 500 에러 발생')
+                return res.text()
+            })
+            .then(text => resolve(text))
+            .catch(() => resolve(''))
     });
 }

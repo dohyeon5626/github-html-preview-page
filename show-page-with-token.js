@@ -3,9 +3,13 @@ let showPageWithToken = async (githubUrl, token) => {
 
     // HTML
     document.open();
-    document.write(
-        (await getContentWithToken(rawUrl, githubUrl)).replace(/<head([^>]*)>/i, `<head$1><base href="${rawUrl}">`)
-    );
+    document.write(await getDocumentContentWithToken(rawUrl, githubUrl));
+    if(!document.head.querySelector('base')) {
+        let base = document.createElement('base');
+        base.href = rawUrl;
+        document.head.appendChild(base);
+    }
+    document.close();
 
     // CSS
     while(document.querySelector("link[rel=stylesheet]:not([status=clear])")) {
@@ -51,7 +55,7 @@ let showPageWithToken = async (githubUrl, token) => {
     // loadScript()
 }
 
-let getContentWithToken = (rawUrl, githubUrl) => {
+let getDocumentContentWithToken = (rawUrl, githubUrl) => {
     return new Promise((resolve) => {
         fetch(rawUrl)
             .then(res => {
@@ -60,5 +64,17 @@ let getContentWithToken = (rawUrl, githubUrl) => {
             })
             .then(text => resolve(text))
             .catch(() => showPage(githubUrl))
+    });
+}
+
+let getContentWithToken = (rawUrl, githubUrl) => {
+    return new Promise((resolve) => {
+        fetch(rawUrl)
+            .then(res => {
+                if (!res.ok) throw new Error('400 or 500 에러 발생')
+                return res.text()
+            })
+            .then(text => resolve(text))
+            .catch(() => resolve(''))
     });
 }
