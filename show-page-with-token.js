@@ -1,5 +1,5 @@
 let showPageWithToken = async (githubUrl, token) => {
-    let rawUrl = githubUrl.replace("github.com", "gfqbuhjryx.us14.qoddiapp.com/github-content/" + token).replace("/blob", "");
+    let rawUrl = githubUrl.replace("github.com", "b884r11mg5.execute-api.us-east-1.amazonaws.com/github-content-proxy/" + token).replace("/blob", "");
 
     // HTML
     document.open();
@@ -42,7 +42,7 @@ let showPageWithToken = async (githubUrl, token) => {
         element.setAttribute(
             "href",
             href.replace(
-                "https://gfqbuhjryx.us14.qoddiapp.com/github-content/" + token,
+                "https://b884r11mg5.execute-api.us-east-1.amazonaws.com/github-content-proxy/" + token,
                 location.origin + location.pathname + "?https://github.com/"
             ) + "&" + token
         );
