@@ -3,7 +3,8 @@
 
 This website allows you to instantly preview HTML files on GitHub. Simply paste the URL of any HTML file, and you'll see the rendered content in your browser. It also supports private repositories when you provide your GitHub token.
 
-**Use** : [Github Html Preview Page](https://github-html-preview.dohyeon5626.com/)   
-**Link** : https://github-html-preview.dohyeon5626.com/?{HTML_GITHUB_URL}&{GITHUB_TOKEN}`
+**Link** : `https://github-html-preview.dohyeon5626.com/?{HTML_GITHUB_URL}&{GITHUB_TOKEN}`  
+**Use** : [github html preview page](https://github-html-preview.dohyeon5626.com/)   
 
-> for https://github.com/dohyeon5626/github-html-preview-extension
+
+> for [github-html-preview-extension](https://github.com/dohyeon5626/github-html-preview-extension)
