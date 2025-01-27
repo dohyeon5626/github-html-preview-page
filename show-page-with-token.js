@@ -1,5 +1,5 @@
 let showPageWithToken = async (githubUrl, token) => {
-    let rawUrl = githubUrl.replace("github.com", "b884r11mg5.execute-api.us-east-1.amazonaws.com/github-content-proxy/content/" + token).replace("/blob", "");
+    let rawUrl = githubUrl.replace("github.com", "licorice-api.dohyeon5626.com/github-content-proxy/content/" + token).replace("/blob", "");
 
     // HTML
     document.open();
@@ -42,7 +42,7 @@ let showPageWithToken = async (githubUrl, token) => {
         element.setAttribute(
             "href",
             href.replace(
-                "https://b884r11mg5.execute-api.us-east-1.amazonaws.com/github-content-proxy/" + token,
+                "https://licorice-api.dohyeon5626.com/github-content-proxy/" + token,
                 location.origin + location.pathname + "?https://github.com/"
             ) + "&" + token
         );
