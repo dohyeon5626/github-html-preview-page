@@ -15,7 +15,7 @@ let showPageWithToken = async (githubUrl, token) => {
     while(document.querySelector("link[rel=stylesheet]:not([status=clear])")) {
         let element = document.querySelector("link[rel=stylesheet]:not([status=clear])");
         let href = element.getAttribute("href")
-        if (!isPublicUrl(href)) element.outerHTML = '<style status="clear">' + await getContentWithToken(href, githubUrl) + "</style>";
+        if (!isPublicUrl(href)) element.outerHTML = '<style status="clear">' + await getContentWithToken(href) + "</style>";
         else element.setAttribute("status", "clear");
     }
 
@@ -26,7 +26,7 @@ let showPageWithToken = async (githubUrl, token) => {
         let script = document.createElement('script');
         let src = element.getAttribute("src")
         if (!isPublicUrl(src)) {
-            script.innerHTML = "(function () {" + await getContentWithToken(src, githubUrl) + "})();";
+            script.innerHTML = "(function () {" + await getContentWithToken(src) + "})();";
             console.log(document.body);
             document.body.appendChild(script);
             script.setAttribute("status", "clear");
@@ -67,7 +67,7 @@ let getDocumentContentWithToken = (rawUrl, githubUrl) => {
     });
 }
 
-let getContentWithToken = (rawUrl, githubUrl) => {
+let getContentWithToken = (rawUrl) => {
     return new Promise((resolve) => {
         fetch(rawUrl)
             .then(res => {
