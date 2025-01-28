@@ -45,7 +45,7 @@ let showErrorPage = () => {
                         </svg>
                         <input type="text" id="token-input" placeholder="Input github token">
                     </div>
-                    <button id="token-button">Enter</button>
+                    <button id="raw-token-button">Enter</button>
                 </div>
             </div>
         `);
@@ -54,7 +54,7 @@ let showErrorPage = () => {
         let token = location.href.split("&")[1];
         if (token) document.getElementById("token-input").value = token;
 
-        document.getElementById("token-button").onclick = () => {
+        document.getElementById("raw-token-button").onclick = () => {
             let token = document.getElementById("token-input").value;
             if (token == "") location.href = location.href.split("&")[0]
             else location.href = location.href.split("&")[0] + "&" + token

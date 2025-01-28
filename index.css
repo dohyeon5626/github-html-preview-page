@@ -103,7 +103,7 @@ body {
 #url-input {
     width: 600px;
 }
-#token-button, #url-button {
+#token-button, #raw-token-button, #url-button {
     height: 34px;
     color: #FFFFFF;
     background-color: #2DA44E;
