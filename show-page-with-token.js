@@ -3,7 +3,12 @@ let showPageWithToken = async (githubUrl, token) => {
 
     // HTML
     document.open();
-    document.write(await getDocumentContentWithToken(rawUrl, githubUrl));
+
+    let data = (await getDocumentContentWithToken(rawUrl, githubUrl)).replace(
+        /<script(\s*src=["'][^"']*["'])?(\s*type=["'](text|application)\/javascript["'])?/gi,
+        '<script type="text/htmlpreview"$1'
+    );
+    document.writeln(data);
     if(!document.head.querySelector('base')) {
         let base = document.createElement('base');
         base.href = rawUrl;
@@ -21,14 +26,13 @@ let showPageWithToken = async (githubUrl, token) => {
 
     // JS
     while(document.querySelector("script[src]:not([status=clear])")) {
-        let element = document.querySelector("script[src]:not([status=clear])");
+        let element = document.querySelector(`script[src]:not([status=clear][type="text/htmlpreview"])`);
 
         let script = document.createElement('script');
         let src = element.getAttribute("src")
         if (!isPublicUrl(src)) {
-            script.innerHTML = "(function () {" + await getContentWithToken(src) + "})();";
-            console.log(document.body);
-            document.body.appendChild(script);
+            script.innerHTML = await getContentWithToken(src);
+            document.head.appendChild(script);
             script.setAttribute("status", "clear");
             element.remove();
         } else element.setAttribute("status", "clear");

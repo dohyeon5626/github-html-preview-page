@@ -68,7 +68,11 @@ let showPage = async (githubUrl) => {
 
     // HTML
     document.open();
-    document.write(await getDocumentContent(rawUrl));
+    let data = (await getDocumentContent(rawUrl)).replace(
+        /<script(\s*src=["'][^"']*["'])?(\s*type=["'](text|application)\/javascript["'])?/gi,
+        '<script type="text/htmlpreview"$1'
+    );
+    document.writeln(data);
     if(!document.head.querySelector('base')) {
         let base = document.createElement('base');
         base.href = rawUrl;
@@ -86,13 +90,13 @@ let showPage = async (githubUrl) => {
 
     // JS
     while(document.querySelector("script[src]:not([status=clear])")) {
-        let element = document.querySelector("script[src]:not([status=clear])");
+        let element = document.querySelector(`script[src]:not([status=clear][type="text/htmlpreview"])`);
 
         let script = document.createElement('script');
         let src = element.getAttribute("src")
         if (!isPublicUrl(src)) {
-            script.innerHTML = "(function () {" + await getContent(src) + "})();";
-            document.body.appendChild(script);
+            script.innerHTML = await getContent(src);
+            document.head.appendChild(script);
             script.setAttribute("status", "clear");
             element.remove();
         } else element.setAttribute("status", "clear");
