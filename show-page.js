@@ -62,17 +62,25 @@ let showErrorPage = () => {
     }
 }
 
+let showPage = async (githubUrl, token) => {
+    if (token) {
+        let rawUrl = githubUrl.replace("github.com", "licorice-api.dohyeon5626.com/github-content-proxy/content/" + token).replace("/blob", "");
+        let data = await getDocumentContentWithToken(rawUrl, githubUrl);
+        showPageLogic(rawUrl, data);
+    } else {
+        let rawUrl = githubUrl.replace("github.com", "raw.githubusercontent.com").replace("/blob", "");
+        let data = await getDocumentContent(rawUrl);
+        showPageLogic(rawUrl, data);
+    }
+}
 
-let showPage = async (githubUrl) => {
-    let rawUrl = githubUrl.replace("github.com", "raw.githubusercontent.com").replace("/blob", "");
-
+let showPageLogic = async (rawUrl, data) => {
     // HTML
     document.open();
-    let data = (await getDocumentContent(rawUrl)).replace(
-        /<script(\s*src=["'][^"']*["'])?(\s*type=["'](text|application)\/javascript["'])?/gi,
+    document.write(data.replace(
+        /<script(?!(?=[^>]*src=["']https?:\/\/))(\s*src=["'][^"']*["'])?(\s*type=["'](text|application)\/javascript["'])?/gi,
         '<script type="text/htmlpreview"$1'
-    );
-    document.writeln(data);
+    ));
     if(!document.head.querySelector('base')) {
         let base = document.createElement('base');
         base.href = rawUrl;
@@ -89,17 +97,28 @@ let showPage = async (githubUrl) => {
     }
 
     // JS
-    while(document.querySelector("script[src]:not([status=clear])")) {
-        let element = document.querySelector(`script[src]:not([status=clear][type="text/htmlpreview"])`);
+    while(document.querySelector(`script:not([status=clear])`)) {
+        let element = document.querySelector(`script:not([status=clear])`);
+        console.log(element)
 
         let script = document.createElement('script');
         let src = element.getAttribute("src")
-        if (!isPublicUrl(src)) {
-            script.innerHTML = await getContent(src);
-            document.head.appendChild(script);
-            script.setAttribute("status", "clear");
-            element.remove();
-        } else element.setAttribute("status", "clear");
+        if(src) {
+            if (!isPublicUrl(src)) {
+                script.innerHTML = await getContent(src);
+                document.head.appendChild(script);
+                script.setAttribute("status", "clear");
+                element.remove();
+            } else {
+                script.src = src;
+                document.head.appendChild(script);
+                script.setAttribute("status", "clear");
+                element.remove();
+            }
+        } else {
+            element.setAttribute("status", "clear");
+            element.removeAttribute("type");
+        }
     }
     window.dispatchEvent(new Event('load'));
 
@@ -116,11 +135,6 @@ let showPage = async (githubUrl) => {
         );
         element.setAttribute("status", "clear");
     }
-
-    // TODO
-    // Frame
-    // @import
-    // loadScript()
 }
 
 let getDocumentContent = (rawUrl) => {
@@ -132,6 +146,22 @@ let getDocumentContent = (rawUrl) => {
             })
             .then(text => resolve(text))
             .catch(() => showErrorPage())
+    });
+}
+
+let getDocumentContentWithToken = (rawUrl, githubUrl) => {
+    return new Promise((resolve) => {
+        fetch(rawUrl)
+            .then(res => {
+                if (!res.ok) throw new Error('400 or 500 에러 발생')
+                return res.text()
+            })
+            .then(text => resolve(text))
+            .catch(async () => {
+                let rawUrl = githubUrl.replace("github.com", "raw.githubusercontent.com").replace("/blob", "");
+                let data = await getDocumentContent(rawUrl);
+                showPageLogic(rawUrl, data);
+            })
     });
 }
 

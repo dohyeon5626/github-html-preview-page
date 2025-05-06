@@ -6,9 +6,7 @@ if (location.search != '') {
     while(document.body == null) {
         console.log("document body load fail");
     }
-
-    if (token) showPageWithToken(url, token);
-    else showPage(url);
+    showPage(url, token);
 } else {
     document.getElementById("loading").remove();
     document.getElementById("base").style.opacity = 1;
