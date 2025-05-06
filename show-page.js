@@ -88,53 +88,57 @@ let showPageLogic = async (rawUrl, data) => {
     }
     document.close();
     
-    // CSS
-    while(document.querySelector("link[rel=stylesheet]:not([status=clear])")) {
-        let element = document.querySelector("link[rel=stylesheet]:not([status=clear])");
-        let href = element.getAttribute("href")
-        if (!isPublicUrl(href)) element.outerHTML = '<style status="clear">' + await getContent(href) + "</style>";
-        else element.setAttribute("status", "clear");
-    }
+    setTimeout(async () => {
+        // CSS
+        while(document.querySelector("link[rel=stylesheet]:not([status=clear])")) {
+            let element = document.querySelector("link[rel=stylesheet]:not([status=clear])");
+            let href = element.getAttribute("href")
+            if (!isPublicUrl(href)) element.outerHTML = '<style status="clear">' + await getContent(href) + "</style>";
+            else element.setAttribute("status", "clear");
+        }
 
-    // JS
-    while(document.querySelector(`script:not([status=clear])`)) {
-        let element = document.querySelector(`script:not([status=clear])`);
-        console.log(element)
+        // JS
+        while(document.querySelector(`script:not([status=clear])`)) {
+            let element = document.querySelector(`script:not([status=clear])`);
+            console.log(element)
 
-        let script = document.createElement('script');
-        let src = element.getAttribute("src")
-        if(src) {
-            if (!isPublicUrl(src)) {
-                script.innerHTML = await getContent(src);
-                document.head.appendChild(script);
-                script.setAttribute("status", "clear");
-                element.remove();
+            let script = document.createElement('script');
+            let src = element.getAttribute("src")
+            if(src) {
+                if (!isPublicUrl(src)) {
+                    script.innerHTML = await getContent(src);
+                    script.setAttribute("status", "clear");
+                    document.head.appendChild(script);
+                    element.remove();
+                } else {
+                    script.src = src;
+                    script.setAttribute("status", "clear");
+                    document.head.appendChild(script);
+                    element.remove();
+                }
             } else {
-                script.src = src;
-                document.head.appendChild(script);
+                script.innerHTML = element.innerHTML;
                 script.setAttribute("status", "clear");
+                document.head.appendChild(script);
                 element.remove();
             }
-        } else {
-            element.setAttribute("status", "clear");
-            element.removeAttribute("type");
         }
-    }
-    window.dispatchEvent(new Event('load'));
+        window.dispatchEvent(new Event('load'));
 
-    // <a> link
-    while(document.querySelector("a[href]:not([status=clear])")) {
-        let element = document.querySelector("a[href]:not([status=clear])");
-        let href = element.href;
-        element.setAttribute(
-            "href",
-            href.replace(
-                "https://raw.githubusercontent.com/",
-                location.origin + location.pathname + "?https://github.com/"
-            )
-        );
-        element.setAttribute("status", "clear");
-    }
+        // <a> link
+        while(document.querySelector("a[href]:not([status=clear])")) {
+            let element = document.querySelector("a[href]:not([status=clear])");
+            let href = element.href;
+            element.setAttribute(
+                "href",
+                href.replace(
+                    "https://raw.githubusercontent.com/",
+                    location.origin + location.pathname + "?https://github.com/"
+                )
+            );
+            element.setAttribute("status", "clear");
+        }
+    }, 100);
 }
 
 let getDocumentContent = (rawUrl) => {
