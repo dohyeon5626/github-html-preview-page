@@ -70,12 +70,9 @@ body {
 }
 #token-box, #url-box {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    width: 280px;
-}
-#url-box {
-    width: 700px;
+    margin: 5px;
 }
 #token-input-box, #url-input-box {
     width: 180px;
@@ -104,7 +101,7 @@ body {
     width: 600px;
 }
 #token-button, #raw-token-button, #url-button {
-    height: 34px;
+    height: 36px;
     color: #FFFFFF;
     background-color: #2DA44E;
     padding: 8px 12px;
@@ -113,4 +110,5 @@ body {
     border-color: #8b949e;
     vertical-align: middle;
     cursor: pointer;
+    margin-left: 5px;
 }
