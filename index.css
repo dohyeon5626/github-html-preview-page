@@ -69,6 +69,7 @@ body {
     top: -1rem;
 }
 #github-oauth-box{
+    width: 270px;
     margin: 5px;
 }
 #token-box, #url-box {
