@@ -6,6 +6,13 @@ let showErrorPage = () => {
         document.open();
         if (time && (Number(time) + 3600000) - new Date().getTime() <= 0) {
             document.write(`
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Html Preview</title>
+                <link rel="icon" type="image/png" sizes="16x16" href="icon/16.png"/>
+                <link rel="icon" type="image/png" sizes="32x32" href="icon/32.png"/>
+                <link rel="icon" type="image/png" sizes="48x48" href="icon/48.png"/>
+                <link rel="icon" type="image/png" sizes="128x128" href="icon/128.png"/>
                 <link rel="stylesheet" href="index.css">
                 <div id="error">
                     <h1 id="error-title">409 Conflict</h1>
@@ -14,6 +21,13 @@ let showErrorPage = () => {
             `);
         } else {
             document.write(`
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Html Preview</title>
+                <link rel="icon" type="image/png" sizes="16x16" href="icon/16.png"/>
+                <link rel="icon" type="image/png" sizes="32x32" href="icon/32.png"/>
+                <link rel="icon" type="image/png" sizes="48x48" href="icon/48.png"/>
+                <link rel="icon" type="image/png" sizes="128x128" href="icon/128.png"/>
                 <link rel="stylesheet" href="index.css">
                 <div id="error">
                     <h1 id="error-title">404 Not Found</h1>
@@ -34,6 +48,13 @@ let showErrorPage = () => {
     } else {
         document.open();
         document.write(`
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Html Preview</title>
+            <link rel="icon" type="image/png" sizes="16x16" href="icon/16.png"/>
+            <link rel="icon" type="image/png" sizes="32x32" href="icon/32.png"/>
+            <link rel="icon" type="image/png" sizes="48x48" href="icon/48.png"/>
+            <link rel="icon" type="image/png" sizes="128x128" href="icon/128.png"/>
             <link rel="stylesheet" href="index.css">
             <div id="error">
                 <h1 id="error-title">404 Not Found</h1>
