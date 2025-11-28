@@ -85,7 +85,7 @@ let showErrorPage = () => {
 
 let showPage = async (githubUrl, token) => {
     if (token) {
-        let rawUrl = githubUrl.replace("github.com", "licorice-api.dohyeon5626.com/github-html-preview/content/" + token).replace("/blob", "");
+        let rawUrl = githubUrl.replace("github.com", "api.dohyeon5626.com/github-html-preview/content/" + token).replace("/blob", "");
         let data = await getDocumentContentWithToken(rawUrl, githubUrl);
         showPageLogic(rawUrl, data);
     } else {
